@@ -11,7 +11,7 @@ class Bullet(Graphical):
         super().__init__(ai_game)
 
         # Bullet image load and it's dimension and position
-        self.bullet_img = pygame.image.load("images/bullet.png")
+        self.bullet_img = self.settings.bullet_img
         self.rect = self.bullet_img.get_rect()
         self.y = float(self.rect.y)
 
@@ -29,6 +29,7 @@ class BulletPlayer(Bullet):
         super().__init__(ai_game)
 
         # Bullet player position
+        self.settings.sound_player_channel.play(self.settings.sound_player_shot)
         self.rect.x = ai_game.ship.rect.x + x
         self.rect.y = ai_game.ship.rect.y + y
         self.y = float(self.rect.y)
@@ -77,7 +78,9 @@ class BulletEnemy(Bullet):
         """Initialization of enemy bullet"""
         super().__init__(ai_game)
 
-        # Position of a enemy bullet and it's statistics
+        # Position of an enemy bullet and it's statistics
+        self.bullet_img = self.settings.enemy_bullet_img
+        self.settings.sound_enemy_channel.play(self.settings.sound_enemy_shot)
         self.rect.x = x
         self.rect.y = y
         self.speed = self.settings.enemy_bullet_speed

@@ -18,6 +18,8 @@ class Skill(Graphical):
         self.rect.x = self.screen_rect.right / 2 + x
         self.rect.y = y
 
+        self.selected = False
+
         # Drawing a skill while initializing a object
         self.draw_skill()
 
@@ -31,7 +33,16 @@ class Skill(Graphical):
             self.rect.y += self.speed
         self.draw_skill()
 
+
     def draw_skill(self):
         """Function responsible for drawing a skill box onto a screen"""
 
+        if self.selected:
+            border_color = (255, 255, 255)
+            border_width = 2
+        else:
+            border_color = (0, 0, 0)
+            border_width = 1
+
         self.screen.blit(self.image, self.rect)
+        pygame.draw.rect(self.screen, border_color, self.rect, border_width)

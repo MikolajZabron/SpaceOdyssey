@@ -10,12 +10,11 @@ class Player(Graphical):
         super().__init__(ai_game)
 
         # Font set
-        self.font = pygame.font.Font(None, 48)
-        self.level_font = pygame.font.Font(None, 20)
-        self.level_font_outline = pygame.font.Font(None, 24)
+        self.font = pygame.font.Font("images/Bruno_Ace_SC/BrunoAceSC-Regular.ttf", 32)
+        self.level_font_outline = pygame.font.Font("images/Bruno_Ace_SC/BrunoAceSC-Regular.ttf", 20)
 
         # Spaceship image load
-        self.image = pygame.image.load("images/player_1.png").convert_alpha()
+        self.image = self.settings.player_image
         self.image = pygame.transform.scale(self.image, (60, 120))
         self.rect = self.image.get_rect()
 
@@ -86,38 +85,41 @@ class Player(Graphical):
 
     def health_bar(self):
         """Drawing of a health bar"""
+        if not self.settings.in_menu:
 
-        # Animation of a health bar
-        if self.health < self.target_health:
-            self.health += self.transition_change_speed
-        if self.health > self.target_health:
-            self.health -= self.transition_change_speed
+            # Animation of a health bar
+            if self.health < self.target_health:
+                self.health += self.transition_change_speed
+            if self.health > self.target_health:
+                self.health -= self.transition_change_speed
 
-        # Drawing on a screen a health bar
-        pygame.draw.rect(self.screen, (255, 0, 0), (self.screen_rect.right / 2 - self.health / 2, 839, self.health, 4))
-        pygame.draw.rect(self.screen, (76, 72, 76), (self.screen_rect.right / 2 - self.settings.max_health / 2, 838,
-                                                     self.settings.max_health, 6), 1, 5)
+            # Drawing on a screen a health bar
+            pygame.draw.rect(self.screen, (255, 0, 0), (self.screen_rect.right / 2 - self.health / 2, 839, self.health, 4))
+            pygame.draw.rect(self.screen, (76, 72, 76), (self.screen_rect.right / 2 - self.settings.max_health / 2, 838,
+                                                         self.settings.max_health, 6), 1, 5)
 
     def level_bar(self):
         """Level bar drawing function"""
 
-        # Animation of a level bar
-        if self.exp < self.target_exp:
-            self.exp += self.transition_change_speed
-        if self.exp > self.target_exp:
-            self.exp -= self.transition_change_speed
+        if not self.settings.in_menu:
 
-        # Drawing on a screen a level_bar
-        pygame.draw.rect(self.screen, (0, 255, 0), (self.screen_rect.right / 2 - (self.exp * self.exp_ratio) / 2,
-                                                    851, self.exp * self.exp_ratio, 6))
-        pygame.draw.rect(self.screen, (76, 72, 76), (self.screen_rect.right / 2 - self.settings.exp_bar_width / 2,
-                                                     850, self.settings.exp_bar_width, 8), 1, 5)
+            # Animation of a level bar
+            if self.exp < self.target_exp:
+                self.exp += self.transition_change_speed
+            if self.exp > self.target_exp:
+                self.exp -= self.transition_change_speed
 
-        # Drawing on a screen a level number
-        text = self.level_font_outline.render(str(self.settings.level), True, (255, 255, 255))
-        text_rect = text.get_rect()
-        text_rect.center = (self.screen_rect.right / 2, 854)
-        self.screen.blit(text, text_rect)
+            # Drawing on a screen a level_bar
+            pygame.draw.rect(self.screen, (0, 255, 0), (self.screen_rect.right / 2 - (self.exp * self.exp_ratio) / 2,
+                                                        851, self.exp * self.exp_ratio, 6))
+            pygame.draw.rect(self.screen, (76, 72, 76), (self.screen_rect.right / 2 - self.settings.exp_bar_width / 2,
+                                                         850, self.settings.exp_bar_width, 8), 1, 5)
+
+            # Drawing on a screen a level number
+            text = self.level_font_outline.render(str(self.settings.level), True, (255, 255, 255))
+            text_rect = text.get_rect()
+            text_rect.center = (self.screen_rect.right / 2, 854)
+            self.screen.blit(text, text_rect)
 
     def skill_choice(self, i):
         """Function which selects bonus coming with currently picked skill"""
@@ -204,9 +206,23 @@ class Player(Graphical):
         """Printing message when leveling up(Temporary)"""
 
         text = self.font.render(message, True, (255, 255, 255))
-        text_rect = text.get_rect()
-        text_rect.center = (self.screen_rect.right / 5, self.screen_rect.bottom - 30)
+        text_rect = text.get_rect(centery=self.screen_rect.bottom - 50)
+        text_rect.right = self.screen_rect.right - 20
         self.screen.blit(text, text_rect)
+
+    def reset_position(self):
+        """Resets ship position when playing again a game"""
+
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.rect.y = self.screen_rect.bottom - 164
+
+        self.x = float(self.rect.x)
+        self.y = float(self.rect.y)
+
+        self.moving_right = False
+        self.moving_left = False
+        self.moving_up = False
+        self.moving_down = False
 
     def blit_me(self):
         """Drawing spaceship on a screen"""

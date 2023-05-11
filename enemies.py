@@ -12,7 +12,7 @@ class Enemies(Graphical):
         super().__init__(ai_game)
 
         # Enemies image load
-        self.image = pygame.image.load("images/enemy.png").convert_alpha()
+        self.image = self.settings.enemy_image
         self.image = pygame.transform.scale(self.image, (160, 81))
 
         # Enemies set dimensions
@@ -45,11 +45,14 @@ class Enemies(Graphical):
             if j == 1:
                 self.kill()
                 self.settings.target_exp += self.settings.enemy_exp
+            else:
+                self.health -= self.settings.damage
         else:
             self.health -= self.settings.damage
 
-        # Checking if comet is destroyed
+        # Checking if enemy is destroyed
         if self.health <= 0:
+            self.settings.sound_enemy_channel.play(self.settings.sound_enemy_death)
             self.kill()
             self.settings.target_exp += self.settings.enemy_exp
 

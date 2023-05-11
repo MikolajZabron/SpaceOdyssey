@@ -11,7 +11,7 @@ class Comet(Graphical):
         super().__init__(ai_game)
 
         # Comet image load and it's dimensions
-        self.image = pygame.image.load("images/comet.png")
+        self.image = self.settings.comet_image
         self.image = pygame.transform.scale(self.image, (80, 59))
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(self.screen_rect.right - self.rect.width)
@@ -40,11 +40,14 @@ class Comet(Graphical):
             if j == 1:
                 self.kill()
                 self.settings.target_exp += self.settings.comet_exp
+            else:
+                self.health -= self.settings.damage
         else:
             self.health -= self.settings.damage
 
         # Checking if comet is destroyed
         if self.health <= 0:
+            self.settings.sound_environment_channel.play(self.settings.sound_comet_death)
             self.kill()
             self.settings.target_exp += self.settings.comet_exp
 
@@ -62,7 +65,7 @@ class CometSmall(Comet):
         super().__init__(ai_game)
 
         # Small comet image transform and it's dimensions
-        self.image = pygame.transform.scale(self.image, (60, 45))
+        self.image = pygame.transform.scale(self.settings.comet_image, (60, 45))
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(self.screen_rect.right - self.rect.width)
         self.rect.y = random.randrange(-200, -100)
@@ -90,5 +93,6 @@ class CometSmall(Comet):
 
         # Checking if comet is destroyed
         if self.health <= 0:
+            self.settings.sound_environment_channel.play(self.settings.sound_comet_death)
             self.kill()
             self.settings.target_exp += self.settings.comet_small_exp

@@ -12,7 +12,7 @@ class Boss(Graphical):
         super().__init__(ai_game)
 
         # Boss image load and set of it's dimensions
-        self.image = pygame.image.load("images/Boss.png").convert_alpha()
+        self.image = self.settings.boss_image
         self.rect = self.image.get_rect()
         self.rect.x = self.screen_rect.right / 2 - self.rect.width / 2
         self.rect.y = -1200
@@ -25,8 +25,8 @@ class Boss(Graphical):
     def update(self):
         """Makes boss object fly down a screen until his top side is 500 pixels over a screen"""
 
-        if self.rect.y >= -500:
-            self.rect.y = -500
+        if self.rect.y >= -550:
+            self.rect.y = -550
             self.speed = 0
             self.settings.boss_bullet_move = True
         else:
@@ -51,10 +51,12 @@ class Boss(Graphical):
 
         # Check if boss is still having health points
         if self.health <= 0:
+            self.settings.sound_enemy_channel.play(self.settings.sound_boss_death)
             self.settings.boss_not_alive = True
             self.settings.target_exp = self.settings.exp_need
             self.settings.endless_mode = True
             self.settings.enemy_bullet_speed = 5
+            self.settings.boss_bullet_move = False
             self.kill()
 
     def draw_boss(self):
