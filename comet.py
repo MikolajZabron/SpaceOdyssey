@@ -47,6 +47,7 @@ class Comet(Graphical):
 
         # Checking if comet is destroyed
         if self.health <= 0:
+            self.settings.sound_comet_death.set_volume(0.5)
             self.settings.sound_environment_channel.play(self.settings.sound_comet_death)
             self.kill()
             self.settings.target_exp += self.settings.comet_exp
@@ -93,6 +94,7 @@ class CometSmall(Comet):
 
         # Checking if comet is destroyed
         if self.health <= 0:
+            self.settings.sound_comet_death.set_volume(0.5)
             self.settings.sound_environment_channel.play(self.settings.sound_comet_death)
             self.kill()
             self.settings.target_exp += self.settings.comet_small_exp

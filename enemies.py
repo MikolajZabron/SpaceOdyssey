@@ -52,6 +52,7 @@ class Enemies(Graphical):
 
         # Checking if enemy is destroyed
         if self.health <= 0:
+            self.settings.sound_enemy_death.set_volume(0.4)
             self.settings.sound_enemy_channel.play(self.settings.sound_enemy_death)
             self.kill()
             self.settings.target_exp += self.settings.enemy_exp

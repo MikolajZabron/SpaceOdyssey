@@ -139,7 +139,7 @@ class SpaceShooter:
             pygame.mixer.quit()
             sys.exit()
         if self.settings.game_frozen:
-            self.sound_environment_channel.set_volume(100.0)
+            self.settings.sound_swipe.set_volume(100.0)
             if event.key == pygame.K_LEFT:
                 for skill in self.skills:
                     self.sound_environment_channel.play(self.settings.sound_swipe)
@@ -153,7 +153,6 @@ class SpaceShooter:
                 self.selected_skill_index = (self.selected_skill_index + 1) % len(self.skill_list)
                 self.skills.sprites()[self.selected_skill_index].selected = True
             elif event.key == pygame.K_RETURN:
-                self.sound_environment_channel.set_volume(0.4)
                 self.sound_environment_channel.play(self.settings.sound_menu_interaction)
                 if self.selected_skill_index == 0:
                     self.left = True
@@ -198,7 +197,8 @@ class SpaceShooter:
         self.available_songs = list(set(self.songs) - {self.previous_song})
         if self.available_songs:
             random_song = random.choice(self.available_songs)
-            self.song_channel.play(pygame.mixer.Sound(random_song), 0, 0, 5000)
+            self.song_channel.set_volume(0.2)
+            self.song_channel.play(random_song, 0, 0, 0)
         else:
             self.available_songs = self.songs
             self.previous_song = None
@@ -206,6 +206,8 @@ class SpaceShooter:
     def play_menu_song(self):
         """Plays menu song"""
 
+        self.song_channel.set_volume(1.0)
+        self.menu_music.set_volume(0.4)
         self.song_channel.play(self.menu_music, 1, 0, 5000)
 
     def attribute_draw(self):
@@ -353,10 +355,11 @@ class SpaceShooter:
         """Spawning boss if defined time elapsed"""
         if self.boss_elapsed_time >= self.settings.boss_spawn_time - 10 and self.settings.boss_not_alive \
                 and not self.settings.endless_mode and self.once:
-            self.song_channel.fadeout(5000)
+            self.song_channel.fadeout(5500)
             self.once = False
         if self.boss_elapsed_time >= self.settings.boss_spawn_time - 4.5 and self.settings.boss_not_alive \
                 and not self.settings.endless_mode and self.once2:
+            self.boss_song.set_volume(1.5)
             self.song_channel.play(self.boss_song, 1, 0, 5000)
             self.once2 = False
         if self.boss_elapsed_time >= self.settings.boss_spawn_time and self.settings.boss_not_alive \
@@ -628,6 +631,7 @@ class SpaceShooter:
 
         self.enemy_spawn_time = pygame.time.get_ticks()
         self.start_time = time.time()
+        self.settings.boss_elapsed_time = None
         self.spawn_interval = self.settings.spawn_interval_res
 
     def _background_transition(self):

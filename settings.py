@@ -20,7 +20,7 @@ class Settings:
         # Screen settings
         self.screen_width = 1920
         self.screen_height = 1080
-        pygame.display.set_caption("Space Shooter")
+        pygame.display.set_caption("The Void Crew")
         self.background = pygame.image.load("images/background_3.jpg")
         self.bg_color = (255, 255, 255)
         self.font = pygame.font.Font("images/Bruno_Ace_SC/BrunoAceSC-Regular.ttf", 56)
@@ -31,7 +31,6 @@ class Settings:
         self.sound_player_channel = pygame.mixer.Channel(1)
         self.sound_enemy_channel = pygame.mixer.Channel(2)
         self.sound_environment_channel = pygame.mixer.Channel(3)
-        self.song_channel.set_volume(0.5)
         self.sound_player_channel.set_volume(0.4)
         self.sound_enemy_channel.set_volume(0.4)
         self.sound_environment_channel.set_volume(0.4)
@@ -42,6 +41,7 @@ class Settings:
             song = pygame.mixer.Sound(f"sounds/game_music_{i}.mp3")
             self.songs.append(song)
         self.menu_music = pygame.mixer.Sound("sounds/menu_music.mp3")
+        self.songs[4].set_volume(0.5)
 
         # Sounds Initializer
         self.sound_game_start = pygame.mixer.Sound("sounds/game_start.mp3")

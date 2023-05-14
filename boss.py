@@ -51,6 +51,7 @@ class Boss(Graphical):
 
         # Check if boss is still having health points
         if self.health <= 0:
+            self.settings.sound_boss_death.set_volume(0.7)
             self.settings.sound_enemy_channel.play(self.settings.sound_boss_death)
             self.settings.boss_not_alive = True
             self.settings.target_exp = self.settings.exp_need

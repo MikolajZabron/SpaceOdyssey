@@ -17,7 +17,7 @@ class Menu:
         """Draws menu on a screen"""
 
         # Draws title of a game
-        text = self.font_title.render("Space Shooter", True, self.settings.white)
+        text = self.font_title.render("The Void Crew", True, self.settings.white)
         rect = text.get_rect(center=self.screen_rect.center)
         rect.y -= self.screen_rect.centery / 2 + 75
         self.screen.blit(text, rect)
@@ -35,7 +35,7 @@ class Menu:
 
     def handle_events(self, event):
 
-        self.settings.sound_environment_channel.set_volume(100.0)
+        self.settings.sound_swipe.set_volume(100.0)
         if event.key == pygame.K_UP:
             self.selected_item = (self.selected_item - 1) % len(self.menu_items)
             self.settings.sound_environment_channel.play(self.settings.sound_swipe)
@@ -43,7 +43,6 @@ class Menu:
             self.selected_item = (self.selected_item + 1) % len(self.menu_items)
             self.settings.sound_environment_channel.play(self.settings.sound_swipe)
         elif event.key == pygame.K_RETURN:
-            self.settings.sound_environment_channel.set_volume(0.4)
             if self.selected_item == 0:
                 return True
             elif self.selected_item == 1:
