@@ -18,9 +18,9 @@ class Settings:
         self.reset_game = False
 
         # Screen settings
-        self.screen_width = 1920
-        self.screen_height = 1080
-        pygame.display.set_caption("The Void Crew")
+        self.screen_width = 1536
+        self.screen_height = 864
+        pygame.display.set_caption("Space Odyssey")
         self.background = pygame.image.load("images/background_3.jpg")
         self.bg_color = (255, 255, 255)
         self.font = pygame.font.Font("images/Bruno_Ace_SC/BrunoAceSC-Regular.ttf", 56)

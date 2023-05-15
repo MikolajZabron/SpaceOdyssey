@@ -29,7 +29,7 @@ class SpaceShooter:
 
         # Game and screen settings
         self.settings = Settings()
-        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         self.running = True
 
         # Font set

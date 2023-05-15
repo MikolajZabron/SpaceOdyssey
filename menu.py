@@ -8,7 +8,7 @@ class Menu:
         self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
 
-        self.font_title = pygame.font.Font("images/Bruno_Ace_SC/BrunoAceSC-Regular.ttf", 72)
+        self.font_title = pygame.font.Font("images/Bruno_Ace_SC/BrunoAceSC-Regular.ttf", 84)
         self.font = pygame.font.Font("images/Bruno_Ace_SC/BrunoAceSC-Regular.ttf", 56)
         self.menu_items = ['Play', 'Leaderboard', 'Exit']
         self.selected_item = 0
@@ -17,9 +17,9 @@ class Menu:
         """Draws menu on a screen"""
 
         # Draws title of a game
-        text = self.font_title.render("The Void Crew", True, self.settings.white)
+        text = self.font_title.render("Space Odyssey", True, self.settings.white)
         rect = text.get_rect(center=self.screen_rect.center)
-        rect.y -= self.screen_rect.centery / 2 + 75
+        rect.y -= self.screen_rect.centery / 2 + 45
         self.screen.blit(text, rect)
 
         # Draws buttons on menu
