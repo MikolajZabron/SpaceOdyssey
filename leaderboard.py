@@ -1,6 +1,7 @@
 import sys
 import pygame.font
 import re
+import itertools
 
 class Leaderboard:
     """Class for managing and displaying the leaderboard"""
@@ -70,13 +71,9 @@ class Leaderboard:
         y = title_rect.bottom + 50
 
         # Draw names and scores on a screen
-        for i in range(len(self.scores)):
-            nickname_label = nickname_labels[i]
-            score_label = score_labels[i]
-
+        for i, (nickname_label, score_label) in zip(itertools.count(), zip(nickname_labels, score_labels)):
             self.screen.blit(nickname_label, (x + 10, y))
             self.screen.blit(score_label, (x + 335, y))
-
             y += nickname_label.get_height() + 10
 
         # Draw a table
