@@ -3,6 +3,7 @@ import pygame.font
 import re
 import itertools
 
+
 class Leaderboard:
     """Class for managing and displaying the leaderboard"""
 
